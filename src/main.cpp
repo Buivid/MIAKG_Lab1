@@ -4,6 +4,7 @@
 #include <stdio.h>
 #include <string>
 #include <cassert>
+#include <stdio.h>
 
 bool init();
 void close();
@@ -65,6 +66,9 @@ int main(int argc, char *argv[])
       printf("Failed to load media!\n");
     } else {
       bool quit = false;
+      Pixel pixel;
+      int a = SCREEN_WIDTH/4;
+      float t = 5;
       SDL_Event e;
 
       while (!quit) {
@@ -76,10 +80,62 @@ int main(int argc, char *argv[])
             switch (e.key.keysym.scancode) {
             case SDL_SCANCODE_KP_PLUS:
               printf("SDL_SCANCODE_KP_PLUS have been presssed\n");
+              pixel.scale_koef+= 0.1;
               break;
             case SDL_SCANCODE_KP_MINUS:
               printf("SDL_SCANCODE_KP_MINUS have been presssed\n");
+              if(pixel.scale_koef>0.1)
+                pixel.scale_koef -= 0.1;
               break;
+            case SDL_SCANCODE_DOWN:
+              printf("SDL_SCANCODE_DOWN have been presssed\n");
+              pixel.y_sh-=5;
+              break;
+            case SDL_SCANCODE_UP:
+              printf("SDL_SCANCODE_UP have been presssed\n");
+              pixel.y_sh+=5;
+              break;
+            case SDL_SCANCODE_LEFT:
+              printf("SDL_SCANCODE_LEFT have been presssed\n");
+              pixel.x_sh+=5;
+              break;
+            case SDL_SCANCODE_RIGHT:
+              printf("SDL_SCANCODE_RIGTH have been presssed\n");
+              pixel.x_sh-=5;
+              break;
+            case SDL_SCANCODE_KP_1:
+              printf("SDL_SCANCODE_1 have been presssed\n");
+              pixel.phi+=10;
+              break;
+            case SDL_SCANCODE_KP_2:
+              printf("SDL_SCANCODE_2 have been presssed\n");
+              pixel.phi-=10;
+              break;
+            case SDL_SCANCODE_A:
+              printf("SDL_SCANCODE_A have been presssed\n");
+              a+= 10;
+
+             break;
+             case SDL_SCANCODE_Q:
+               int x, y;
+              SDL_GetMouseState(&x,&y);
+              printf("%d %d \n",x,y);
+
+
+             break;
+            case SDL_SCANCODE_S:
+              printf("SDL_SCANCODE_S have been presssed\n");
+              a-= 10;
+              break;
+            case SDL_SCANCODE_T:
+              printf("SDL_SCANCODE_T have been presssed\n");
+              t+= 1;
+              break;
+            case SDL_SCANCODE_Y:
+              printf("SDL_SCANCODE_Y have been presssed\n");
+              t-= 1;
+              break;
+
             case SDL_SCANCODE_ESCAPE:
               quit = true;
               break;
@@ -87,10 +143,11 @@ int main(int argc, char *argv[])
               break;
             }
           }
+
         }
         SDL_RenderClear(gRenderer);
 
-        draw(loadedSurface);
+        draw(loadedSurface, pixel, a, t);
 
         SDL_UpdateTexture(gTexture, NULL, loadedSurface->pixels, loadedSurface->pitch);
         SDL_RenderCopy(gRenderer, gTexture, NULL, NULL);
