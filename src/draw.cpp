@@ -32,15 +32,17 @@ Uint32 get_pixel32(SDL_Surface *surface, int x, int y)
   return pixels[(y * surface->w) + x];
 }
 
-void draw(SDL_Surface *s, Pixel p, int a, float par_t)
+void draw(SDL_Surface *s, Drawing graphic, int a, float par_t)
 {
   // glm::vec4 Position = glm::vec4(glm::vec3(0.0f), 1.0f);
   // glm::mat4 Model = glm::translate(    glm::mat4(1.0f), glm::vec3(1.0f));
   // glm::vec4 Transformed = Model * Position;
 
-  Pixel p2 = p;
+  Transform p2;
   p2.phi=0;
   p2.scale_koef=1;
+  p2.Tx=SCREEN_WIDTH/2;
+  p2.Ty=SCREEN_HEIGHT/2;
   glm::vec3 axes;
 
   for(int i =0; i<SCREEN_WIDTH; i++)
@@ -77,10 +79,25 @@ void draw(SDL_Surface *s, Pixel p, int a, float par_t)
   float x, y, x_rot, y_rot;
   for(float t = -par_t; t<par_t; t+=0.001)
   {
-    x =  a*t*t/(1+t*t);
+    x =  (a*t*t/(1+t*t));
     y = a*t*t*t/(1+t*t);
+    //glm::vec3 vector = {x, y, 1.0f};
 
-    vector = p.transform(x,y);
+    graphic.get_vector(x, y);
+    graphic.get_vector_shift();
+    vector = graphic.transform();
+
+
+
+    //p.Tx=object_syst
+
+
+   // vector = p.transform(vector.x+p.x_sh, vector.y+p.y_sh);
+
+
+
+
+
     x_rounded = round(vector.x);
     y_rounded = round(vector.y);
 
