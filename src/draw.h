@@ -73,15 +73,15 @@ class Drawing: public Transform
 {
   protected:
   glm::vec3 vector;
-  glm::vec3 observer_syst_coord;
-  glm::vec3 object_syst_coord;
+  glm::vec3 center_syst_coord;
+  glm::vec3 object_coord;
   public:
   Drawing(int x, int y)
   {
-    observer_syst_coord.x=x;
-    observer_syst_coord.y=y;
-    object_syst_coord.x=x;
-    object_syst_coord.y=y;
+    center_syst_coord.x=x;
+    center_syst_coord.y=y;
+    object_coord.x=x;
+    object_coord.y=y;
     Transform::Tx=x;
     Transform::Ty=y;
   }
@@ -89,26 +89,20 @@ class Drawing: public Transform
   {
     vector = {x, y, 1.0f};
   }
-  void get_observer_coord(int x, int y)
+  void get_center_syst_coord(int x, int y)
   {
-    observer_syst_coord = {x, y, 1.0f};
+    center_syst_coord = {x, y, 1.0f};
     Tx=x;
     Ty=y;
   }
   void get_vector_shift()
   {
-    vector=vector+object_syst_coord-observer_syst_coord;
-    //vector=vector-observer_syst_coord;
-    //vector=vector-(object_syst_coord-observer_syst_coord);
+    vector=vector+object_coord-center_syst_coord;
   }
   glm::vec3 transform()
   {
     vector = Transform::transform(vector.x, vector.y);
     return vector;
   }
-
-
-
-
 };
 void draw(SDL_Surface *s, Drawing p, int a, float t);

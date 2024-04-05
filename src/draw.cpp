@@ -81,23 +81,11 @@ void draw(SDL_Surface *s, Drawing graphic, int a, float par_t)
   {
     x =  (a*t*t/(1+t*t));
     y = a*t*t*t/(1+t*t);
-    //glm::vec3 vector = {x, y, 1.0f};
+
 
     graphic.get_vector(x, y);
     graphic.get_vector_shift();
     vector = graphic.transform();
-
-
-
-    //p.Tx=object_syst
-
-
-   // vector = p.transform(vector.x+p.x_sh, vector.y+p.y_sh);
-
-
-
-
-
     x_rounded = round(vector.x);
     y_rounded = round(vector.y);
 

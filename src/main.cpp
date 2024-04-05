@@ -69,8 +69,7 @@ int main(int argc, char *argv[])
       Drawing graphic(SCREEN_WIDTH/2,SCREEN_HEIGHT/2);
       int a = SCREEN_WIDTH/4;
       float t = 5;
-      // glm:: vec3 object_syst_coord = {SCREEN_WIDTH/2, SCREEN_HEIGHT/2, 1.0f};
-      // glm:: vec3 observer_syst_coord = {SCREEN_WIDTH/2, SCREEN_HEIGHT/2, 1.0f};
+
       SDL_Event e;
 
       while (!quit) {
@@ -118,18 +117,12 @@ int main(int argc, char *argv[])
             case SDL_SCANCODE_A:
               printf("SDL_SCANCODE_A have been presssed\n");
               a+= 10;
-
              break;
             case SDL_SCANCODE_Q:
                int x, y;
               SDL_GetMouseState(&x,&y);
               printf("%d %d \n",x,y);
-              graphic.get_observer_coord(x,y);
-
-
-
-
-
+              graphic.get_center_syst_coord(x,y);
              break;
             case SDL_SCANCODE_S:
               printf("SDL_SCANCODE_S have been presssed\n");
